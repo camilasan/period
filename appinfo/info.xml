@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>period</id>
+    <name>Period</name>
+    <summary>Period tracker app.</summary>
+    <description><![CDATA[How can you deal with it your menstrual cycle data while making sure big tech and health insurances do not have access to it?
+By using a Nextcloud application.
+
+Track your period without worrying about data privacy.]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author mail="hello@camilasan.com" homepage="https://camila-san.gitlab.io/">Camila Ayres</author>
+    <namespace>Period</namespace>
+    <category>tools</category>
+    <bugs>https://camila-san.gitlab.io/</bugs>
+    <dependencies>
+        <nextcloud min-version="28" max-version="28"/>
+    </dependencies>
+    <navigations>
+        <navigation>
+            <name>Period</name>
+            <route>period.page.index</route>
+        </navigation>
+    </navigations>
+<!--    <repair-steps>-->
+<!--        <live-migration>-->
+<!--            <step>OCA\Period\Migration\Version000000Date20240218</step>-->
+<!--        </live-migration>-->
+<!--    </repair-steps>-->
+</info>
