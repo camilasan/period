@@ -48,10 +48,6 @@ class Version000000Date20240218 extends SimpleMigrationStep {
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-            $table->addColumn('user_id', 'string', [
-                'notnull' => true,
-                'length' => 200,
-            ]);
 			$table->addColumn('name', 'string', [
 				'notnull' => true,
 				'length' => 200
@@ -62,6 +58,10 @@ class Version000000Date20240218 extends SimpleMigrationStep {
             $table->addColumn('contraceptive', 'text', [
                 'notnull' => true,
                 'default' => ''
+            ]);
+            $table->addColumn('user_id', 'string', [
+                'notnull' => true,
+                'length' => 200,
             ]);
 
 			$table->setPrimaryKey(['id']);
