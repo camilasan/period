@@ -30,7 +30,7 @@ use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
 
 /**
- * @method getProfileId(): int
+ * @method getId(): int
  * @method getName(): string
  * @method setName(string $name): void
  * @method getAge(): int
@@ -41,6 +41,7 @@ use OCP\AppFramework\Db\Entity;
  * @method setUserId(string $userId): void
  */
 class Profile extends Entity implements JsonSerializable {
+    public int $id;
     protected string $name = '';
     protected int $age = 0;
     protected string $contraceptive = '';
@@ -51,7 +52,8 @@ class Profile extends Entity implements JsonSerializable {
             'id' => $this->id,
             'name' => $this->name,
             'age' => $this->age,
-            'contraceptive' => $this->contraceptive
+            'contraceptive' => $this->contraceptive,
+            'userId' => $this->userId,
         ];
     }
 }
