@@ -31,6 +31,8 @@ use OCP\AppFramework\Db\Entity;
 
 /**
  * @method getId(): int
+ * @method getName(): string
+ * @method setname(string $name): void
  * @method getDescription(): string
  * @method setDescription(string $description): void
  * @method getCategoryId(): string
@@ -40,6 +42,7 @@ use OCP\AppFramework\Db\Entity;
  */
 class Symptom extends Entity implements JsonSerializable {
     public int $id;
+    protected string $name = '';
     protected string $description = '';
     protected string $categoryId = '';
     protected string $userId = '';
@@ -47,6 +50,7 @@ class Symptom extends Entity implements JsonSerializable {
     public function jsonSerialize(): array {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'description' => $this->description,
             'categoryId' => $this->categoryId,
             'userId' => $this->userId,
