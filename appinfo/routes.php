@@ -33,5 +33,26 @@ return [
         ['name' => 'profile#show', 'url' => '/profiles/{profileId}', 'verb' => 'GET'],
         ['name' => 'profile#update', 'url' => '/profiles/{profileId}', 'verb' => 'PUT'],
         ['name' => 'profile#delete', 'url' => '/profiles/{profileId}', 'verb' => 'DELETE'],
+
+    // calendar
+        ['name' => 'calendar#index', 'url' => '/calendars', 'verb' => 'GET'],
+        ['name' => 'calendar#create', 'url' => '/calendars', 'verb' => 'POST'],
+        ['name' => 'calendar#show', 'url' => '/calendars/{calendarId}', 'verb' => 'GET'],
+        ['name' => 'calendar#update', 'url' => '/calendars/{calendarId}', 'verb' => 'PUT'],
+        ['name' => 'calendar#delete', 'url' => '/calendars/{calendarId}', 'verb' => 'DELETE'],
+
+    // symptom
+        ['name' => 'symptom#index', 'url' => '/symptoms', 'verb' => 'GET'],
+        ['name' => 'symptom#create', 'url' => '/symptoms', 'verb' => 'POST'],
+        ['name' => 'symptom#show', 'url' => '/symptoms/{symptomId}', 'verb' => 'GET'],
+        ['name' => 'symptom#update', 'url' => '/symptoms/{symptomId}', 'verb' => 'PUT'],
+        ['name' => 'symptom#delete', 'url' => '/symptoms/{symptomId}', 'verb' => 'DELETE'],
+
+    // category
+        ['name' => 'category#index', 'url' => '/categories', 'verb' => 'GET'],
+        ['name' => 'category#create', 'url' => '/categories', 'verb' => 'POST'],
+        ['name' => 'category#show', 'url' => '/categories/{categoryId}', 'verb' => 'GET'],
+        ['name' => 'category#update', 'url' => '/categories/{categoryId}', 'verb' => 'PUT'],
+        ['name' => 'category#delete', 'url' => '/categories/{categoryId}', 'verb' => 'DELETE'],
 	]
 ];
