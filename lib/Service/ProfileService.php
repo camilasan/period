@@ -53,13 +53,13 @@ class ProfileService {
 
     /**
      * @return never
-     * @throws ProfileNotFound
+     * @throws ExceptionNotFound
      * @throws Exception
      */
     private function handleException(Exception $e) {
         if ($e instanceof DoesNotExistException ||
             $e instanceof MultipleObjectsReturnedException) {
-            throw new ProfileNotFound($e->getMessage());
+            throw new ExceptionNotFound($e->getMessage());
         } else {
             throw $e;
         }

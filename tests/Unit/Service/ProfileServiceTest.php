@@ -28,7 +28,7 @@ namespace OCA\Period\Tests\Unit\Service;
 use OCA\Period\Db\Profile;
 use OCA\Period\Db\ProfileMapper;
 
-use OCA\Period\Service\ProfileNotFound;
+use OCA\Period\Service\ExceptionNotFound;
 
 use OCA\Period\Service\ProfileService;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -104,7 +104,7 @@ class ProfileServiceTest extends TestCase {
     }
 
 	public function testUpdateNotFound(): void {
-		$this->expectException(ProfileNotFound::class);
+		$this->expectException(ExceptionNotFound::class);
 		// test the correct status code if no note is found
 		$this->mapper->expects($this->once())
 			->method('find')

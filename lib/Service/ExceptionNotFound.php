@@ -25,5 +25,5 @@ declare(strict_types=1);
 
 namespace OCA\Period\Service;
 
-class ProfileNotFound extends \Exception {
+class ExceptionNotFound extends \Exception {
 }

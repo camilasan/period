@@ -27,7 +27,7 @@ namespace OCA\Period\Tests\Unit\Controller;
 
 use OCA\Period\Controller\ProfileController;
 
-use OCA\Period\Service\ProfileNotFound;
+use OCA\Period\Service\ExceptionNotFound;
 use OCA\Period\Service\ProfileService;
 
 use OCP\AppFramework\Http;
@@ -86,7 +86,7 @@ class ProfileControllerTest extends TestCase {
 		// test the correct status code if no note is found
 		$this->service->expects($this->once())
 			->method('update')
-			->will($this->throwException(new ProfileNotFound()));
+			->will($this->throwException(new ExceptionNotFound()));
 
 		$result = $this->controller->update(3, 'title', 42, 'pill');
 
