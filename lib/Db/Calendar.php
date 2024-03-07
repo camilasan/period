@@ -36,8 +36,6 @@ use OCP\AppFramework\Db\Entity;
  * @method setDate(?DateTime $date): void
  * @method getNote(): string
  * @method setNote(string $note): void
- * @method getProfileId(): string
- * @method setProfileId(string $userId): void
  * @method getSymptomId(): string
  * @method setSymptomId(string $symptomId): void
  * @method getUserId(): string
@@ -48,7 +46,6 @@ class Calendar extends Entity implements JsonSerializable {
     public int $id;
     protected ?DateTime $date = null;
     protected string $note = '';
-    protected string $profileId = '';
     protected string $symptomId = '';
     protected string $userId = '';
 
@@ -58,7 +55,6 @@ class Calendar extends Entity implements JsonSerializable {
             'date' => $this->date,
             'note' => $this->note,
             'symptomId' => $this->symptomId,
-            'profileId' => $this->profileId,
             'userId' => $this->userId,
         ];
     }

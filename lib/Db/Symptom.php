@@ -32,7 +32,7 @@ use OCP\AppFramework\Db\Entity;
 /**
  * @method getId(): int
  * @method getName(): string
- * @method setname(string $name): void
+ * @method setName(string $name): void
  * @method getDescription(): string
  * @method setDescription(string $description): void
  * @method getCategoryId(): string

@@ -36,7 +36,7 @@ use OCP\IDBConnection;
  */
 class SymptomMapper extends QBMapper {
     public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'period_symptom', Profile::class);
+        parent::__construct($db, 'period_symptom', Symptom::class);
     }
 
     /**

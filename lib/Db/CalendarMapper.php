@@ -36,7 +36,7 @@ use OCP\IDBConnection;
  */
 class CalendarMapper extends QBMapper {
     public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'period_calendar', Profile::class);
+        parent::__construct($db, 'period_calendar', Calendar::class);
     }
 
     /**
