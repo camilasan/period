@@ -16,6 +16,7 @@ Track your period without worrying about data privacy.
 - [A Nextcloud server running (> stable28)](https://docs.nextcloud.com/server/latest/admin_manual/installation/index.html)
 - [Node.js](https://nodejs.org/en/)
 - [Composer](https://getcomposer.org/)
+- [Webpack](https://webpack.js.org/)
 
 ### 📝 General build instructions
 
