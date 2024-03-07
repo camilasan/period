@@ -36,7 +36,7 @@ use OCP\IDBConnection;
  */
 class CategoryMapper extends QBMapper {
     public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'period_category', Profile::class);
+        parent::__construct($db, 'period_category', Category::class);
     }
 
     /**

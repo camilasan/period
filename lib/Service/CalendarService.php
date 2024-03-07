@@ -79,7 +79,7 @@ class CalendarService {
         }
     }
 
-    public function create(?DateTime $date, string $note, string $profileId,
+    public function create(?DateTime $date, string $note,
                            string $symptomId, string $userId): Calendar {
         $calendar = new Calendar();
         $calendar->setDate($date);
@@ -90,7 +90,7 @@ class CalendarService {
     }
 
     public function update(int $calendarId, ?DateTime $date, string $note,
-                           string $profileId, string $symptomId, string $userId): Calendar {
+                           string $symptomId, string $userId): Calendar {
         try {
             $calendar = $this->mapper->find($calendarId, $userId);
             $calendar->setDate($date);

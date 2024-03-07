@@ -109,10 +109,6 @@ class Version000001Date20240226 extends SimpleMigrationStep
                 'notnull' => true,
                 'length' => 200,
             ]);
-            $table->addColumn('profile_id', 'string', [
-                'notnull' => true,
-                'length' => 200,
-            ]);
             $table->addColumn('symptom_id', 'string', [
                 'notnull' => true,
                 'length' => 200,

@@ -43,29 +43,29 @@ class Version000000Date20240218 extends SimpleMigrationStep {
 		$schema = $schemaClosure();
 
 		if (!$schema->hasTable('period_profile')) {
-			$table = $schema->createTable('period_profile');
-			$table->addColumn('id', 'integer', [
-				'autoincrement' => true,
-				'notnull' => true,
-			]);
-			$table->addColumn('name', 'string', [
-				'notnull' => true,
-				'length' => 200
-			]);
-            $table->addColumn('age', 'integer', [
-                'notnull' => true,
-            ]);
-            $table->addColumn('contraceptive', 'text', [
-                'notnull' => true,
-                'default' => ''
-            ]);
-            $table->addColumn('user_id', 'string', [
-                'notnull' => true,
-                'length' => 200,
-            ]);
-
-			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'period_profile_user_id_index');
+//			$table = $schema->createTable('period_profile');
+//			$table->addColumn('id', 'integer', [
+//				'autoincrement' => true,
+//				'notnull' => true,
+//			]);
+//			$table->addColumn('name', 'string', [
+//				'notnull' => true,
+//				'length' => 200
+//			]);
+//            $table->addColumn('age', 'integer', [
+//                'notnull' => true,
+//            ]);
+//            $table->addColumn('contraceptive', 'text', [
+//                'notnull' => true,
+//                'default' => ''
+//            ]);
+//            $table->addColumn('user_id', 'string', [
+//                'notnull' => true,
+//                'length' => 200,
+//            ]);
+//
+//			$table->setPrimaryKey(['id']);
+//			$table->addIndex(['user_id'], 'period_profile_user_id_index');
 		}
 		return $schema;
 	}

@@ -70,8 +70,8 @@ class CalendarController extends Controller {
     /**
      * @NoAdminRequired
      */
-    public function create(?DateTime $date, string $note, string $profileId, string $symptomId): DataResponse {
-        return new DataResponse($this->service->create($date, $note, $profileId, $symptomId, $this->userId));
+    public function create(?DateTime $date, string $note, string $symptomId): DataResponse {
+        return new DataResponse($this->service->create($date, $note, $symptomId, $this->userId));
     }
 
     /**
@@ -79,8 +79,8 @@ class CalendarController extends Controller {
      */
     public function update(int $calendarId, ?DateTime $date, string $note, string $profileId,
                            string $symptomId): DataResponse {
-        return $this->handleNotFound(function () use ($calendarId, $date, $note, $profileId, $symptomId) {
-            return $this->service->update($calendarId, $date, $note, $profileId, $symptomId, $this->userId);
+        return $this->handleNotFound(function () use ($calendarId, $date, $note, $symptomId) {
+            return $this->service->update($calendarId, $date, $note, $symptomId, $this->userId);
         });
     }
 
