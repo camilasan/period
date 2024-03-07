@@ -23,9 +23,9 @@ Track your period without worrying about data privacy.]]></description>
             <route>period.page.index</route>
         </navigation>
     </navigations>
-<!--    <repair-steps>-->
-<!--        <live-migration>-->
-<!--            <step>OCA\Period\Migration\Version000000Date20240218</step>-->
-<!--        </live-migration>-->
-<!--    </repair-steps>-->
+    <repair-steps>
+        <live-migration>
+            <step>OCA\Period\Migration\DropTables</step>
+        </live-migration>
+    </repair-steps>
 </info>
