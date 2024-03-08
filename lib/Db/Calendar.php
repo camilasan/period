@@ -32,6 +32,8 @@ use OCP\AppFramework\Db\Entity;
 
 /**
  * @method getId(): int
+ * @method getFeeling(): string
+ * @method setFeeling(string $feeling): void
  * @method getDate(): ?DateTime
  * @method setDate(?DateTime $date): void
  * @method getNote(): string
@@ -47,6 +49,7 @@ use OCP\AppFramework\Db\Entity;
 class Calendar extends Entity implements JsonSerializable {
     public int $id;
     protected ?DateTime $date = null;
+    protected string $feeling = '';
     protected string $note = '';
     protected string $symptomId = '';
     protected string $contraceptiveId = '';
@@ -55,6 +58,7 @@ class Calendar extends Entity implements JsonSerializable {
     public function jsonSerialize(): array {
         return [
             'id' => $this->id,
+            'feeling' => $this->feeling,
             'date' => $this->date,
             'note' => $this->note,
             'symptomId' => $this->symptomId,

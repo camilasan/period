@@ -79,9 +79,10 @@ class CalendarService {
         }
     }
 
-    public function create(?DateTime $date, string $note, string $symptomId,
+    public function create(string $feeling, ?DateTime $date, string $note, string $symptomId,
                            string $contraceptiveId, string $userId): Calendar {
         $calendar = new Calendar();
+        $calendar->setFeeling($feeling);
         $calendar->setDate($date);
         $calendar->setNote($note);
         $calendar->setSymptomId($symptomId);
@@ -90,10 +91,11 @@ class CalendarService {
         return $this->mapper->insert($calendar);
     }
 
-    public function update(int $calendarId, ?DateTime $date, string $note, string $symptomId,
+    public function update(int $calendarId, string $feeling, ?DateTime $date, string $note, string $symptomId,
                            string $contraceptiveId, string $userId): Calendar {
         try {
             $calendar = $this->mapper->find($calendarId, $userId);
+            $calendar->setFeeling($feeling);
             $calendar->setDate($date);
             $calendar->setNote($note);
             $calendar->setSymptomId($symptomId);

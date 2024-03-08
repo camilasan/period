@@ -128,6 +128,10 @@ class Version000001Date20240226 extends SimpleMigrationStep
                 'autoincrement' => true,
                 'notnull' => true,
             ]);
+            $table->addColumn('feeling', 'string', [
+                'notnull' => true,
+                'length' => 200,
+            ]);
             $table->addColumn('date', 'datetime', [
                 'default' => null,
                 'notnull' => false,
