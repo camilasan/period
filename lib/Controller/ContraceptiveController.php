@@ -26,15 +26,14 @@ declare(strict_types=1);
 namespace OCA\Period\Controller;
 
 use OCA\Period\AppInfo\Application;
-use OCA\Period\Service\CalendarService;
+use OCA\Period\Service\ContraceptiveService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\ILogger;
-use DateTime;
 
-class CalendarController extends Controller {
-    private CalendarService $service;
+class ContraceptiveController extends Controller {
+    private ContraceptiveService $service;
     private ?string $userId;
 
     use Errors;
@@ -42,7 +41,7 @@ class CalendarController extends Controller {
     private ILogger $logger;
 
     public function __construct(IRequest       $request,
-                                CalendarService $service,
+                                ContraceptiveService $service,
                                 ?string        $userId,
                                 ILogger        $logger) {
         parent::__construct(Application::APP_ID, $request);
@@ -61,38 +60,37 @@ class CalendarController extends Controller {
     /**
      * @NoAdminRequired
      */
-    public function show(int $calendarId): DataResponse {
-        return $this->handleNotFound(function () use ($calendarId) {
-            return $this->service->find($calendarId, $this->userId);
+    public function show(int $contraceptiveId): DataResponse {
+        return $this->handleNotFound(function () use ($contraceptiveId) {
+            return $this->service->find($contraceptiveId, $this->userId);
         });
     }
 
     /**
      * @NoAdminRequired
      */
-    public function create(?DateTime $date, string $note,
-                           string $symptomId, string $contraceptiveId): DataResponse {
-        return new DataResponse($this->service->create($date, $note, $symptomId, $contraceptiveId, $this->userId));
+    public function create(string $name, string $description, string $sideEffects): DataResponse {
+        return new DataResponse($this->service->create($name, $description, $sideEffects, $this->userId));
     }
 
     /**
      * @NoAdminRequired
      */
-    public function update(int $calendarId, ?DateTime $date, string $note, string $profileId,
-                           string $symptomId, string $contraceptiveId): DataResponse {
-        return $this->handleNotFound(function () use ($calendarId, $date, $note, $symptomId, $contraceptiveId) {
-            return $this->service->update($calendarId, $date, $note, $symptomId, $contraceptiveId, $this->userId);
+    public function update(int $contraceptiveId, string $name,
+                           string $description, string $sideEffects): DataResponse {
+        return $this->handleNotFound(function () use ($contraceptiveId, $name, $description, $sideEffects) {
+            return $this->service->update($contraceptiveId, $name, $description, $sideEffects, $this->userId);
         });
     }
 
     /**
      * @NoAdminRequired
      */
-    public function delete(int $calendarId): DataResponse {
-        $this->logger->debug('Trying to delete profile id: '.$calendarId);
-        $this->logger->debug('by user id: '.$this->userId);
-        return $this->handleNotFound(function () use ($calendarId) {
-            return $this->service->delete($calendarId, $this->userId);
+    public function delete(int $contraceptiveID): DataResponse {
+        $this->logger->debug('Trying to delete contraceptive id: ' . $contraceptiveID);
+        $this->logger->debug('by user id: ' . $this->userId);
+        return $this->handleNotFound(function () use ($contraceptiveID) {
+            return $this->service->delete($contraceptiveID, $this->userId);
         });
     }
 }

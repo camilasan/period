@@ -55,6 +55,10 @@ class DropTables extends SimpleMigrationStep
             $table = $schema->delete('period_symptom');
         }
 
+        if (!$schema->hasTable('period_contraceptive')) {
+            $table = $schema->delete('period_contraceptive');
+        }
+
         if (!$schema->hasTable('period_calendar')) {
             $table = $schema->delete('period_calendar');
         }

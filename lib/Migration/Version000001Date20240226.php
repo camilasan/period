@@ -95,6 +95,33 @@ class Version000001Date20240226 extends SimpleMigrationStep
             $table->addIndex(['user_id'], 'period_symptom_user_id_index');
         }
 
+        if (!$schema->hasTable('period_contraceptive')) {
+            $table = $schema->createTable('period_contraceptive');
+            $table->addColumn('id', 'integer', [
+                'autoincrement' => true,
+                'notnull' => true,
+            ]);
+            $table->addColumn('name', 'string', [
+                'notnull' => true,
+                'length' => 200,
+            ]);
+            $table->addColumn('description', 'text', [
+                'notnull' => true,
+                'length' => 200,
+            ]);
+            $table->addColumn('side_effects', 'text', [
+                'notnull' => true,
+                'length' => 200,
+            ]);
+            $table->addColumn('user_id', 'string', [
+                'notnull' => true,
+                'length' => 200,
+            ]);
+
+            $table->setPrimaryKey(['id']);
+            $table->addIndex(['user_id'], 'period_category_user_id_index');
+        }
+
         if (!$schema->hasTable('period_calendar')) {
             $table = $schema->createTable('period_calendar');
             $table->addColumn('id', 'integer', [
@@ -110,6 +137,10 @@ class Version000001Date20240226 extends SimpleMigrationStep
                 'length' => 200,
             ]);
             $table->addColumn('symptom_id', 'string', [
+                'notnull' => true,
+                'length' => 200,
+            ]);
+            $table->addColumn('contraceptive_id', 'string', [
                 'notnull' => true,
                 'length' => 200,
             ]);

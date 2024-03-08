@@ -26,27 +26,26 @@ declare(strict_types=1);
 namespace OCA\Period\Service;
 
 use Exception;
-use DateTime;
 
-use OCA\Period\Db\CalendarMapper;
-use OCA\Period\Db\Calendar;
+use OCA\Period\Db\ContraceptiveMapper;
+use OCA\Period\Db\Contraceptive;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
 use OCP\ILogger;
 
-class CalendarService {
-    private CalendarMapper $mapper;
+class ContraceptiveService {
+    private ContraceptiveMapper $mapper;
     private ILogger $logger;
 
-    public function __construct(CalendarMapper $mapper, ILogger $logger) {
+    public function __construct(ContraceptiveMapper $mapper, ILogger $logger) {
         $this->mapper = $mapper;
         $this->logger = $logger;
     }
 
     /**
-     * @return list<Calendar>
+     * @return list<Contraceptive>
      */
     public function findAll(string $userId): array {
         return $this->mapper->findAll($userId);
@@ -66,9 +65,9 @@ class CalendarService {
         }
     }
 
-    public function find(int $calendarId, string $userId): Calendar {
+    public function find(int $contraceptiveId, string $userId): Contraceptive {
         try {
-            return $this->mapper->find($calendarId, $userId);
+            return $this->mapper->find($contraceptiveId, $userId);
 
             // in order to be able to plug in different storage backends like files
             // for instance it is a good idea to turn storage related exceptions
@@ -79,38 +78,36 @@ class CalendarService {
         }
     }
 
-    public function create(?DateTime $date, string $note, string $symptomId,
-                           string $contraceptiveId, string $userId): Calendar {
-        $calendar = new Calendar();
-        $calendar->setDate($date);
-        $calendar->setNote($note);
-        $calendar->setSymptomId($symptomId);
-        $calendar->setContraceptiveId($contraceptiveId);
-        $calendar->setUserId($userId);
-        return $this->mapper->insert($calendar);
+    public function create(string $name, string $description,
+                           string $sideEffects, string $userId): Contraceptive {
+        $contraceptive = new Contraceptive();
+        $contraceptive->setName($name);
+        $contraceptive->setDescription($description);
+        $contraceptive->setSideEffects($sideEffects);
+        $contraceptive->setUserId($userId);
+        return $this->mapper->insert($contraceptive);
     }
 
-    public function update(int $calendarId, ?DateTime $date, string $note, string $symptomId,
-                           string $contraceptiveId, string $userId): Calendar {
+    public function update(int $contraceptiveId, string $name, string $description,
+                           string $sideEffects, string $userId): Contraceptive {
         try {
-            $calendar = $this->mapper->find($calendarId, $userId);
-            $calendar->setDate($date);
-            $calendar->setNote($note);
-            $calendar->setSymptomId($symptomId);
-            $calendar->setContraceptiveId($contraceptiveId);
-            return $this->mapper->update($calendar);
+            $contraceptive = $this->mapper->find($contraceptiveId, $userId);
+            $contraceptive->setName($name);
+            $contraceptive->setDescription($description);
+            $contraceptive->setSideEffects($sideEffects);
+            return $this->mapper->update($contraceptive);
         } catch (Exception $e) {
             $this->handleException($e);
         }
     }
 
-    public function delete(int $calendarId, string $userId): Calendar {
-        $this->logger->debug('Trying to delete calendar id: '.$calendarId);
+    public function delete(int $contraceptiveId, string $userId): Contraceptive {
+        $this->logger->debug('Trying to delete contraceptive id: ' . $contraceptiveId);
         $this->logger->debug('by user id: '.$userId);
         try {
-            $calendar = $this->mapper->find($calendarId, $userId);
-            $this->mapper->delete($calendar);
-            return $calendar;
+            $contraceptive = $this->mapper->find($contraceptiveId, $userId);
+            $this->mapper->delete($contraceptive);
+            return $contraceptive;
         } catch (Exception $e) {
             $this->handleException($e);
         }

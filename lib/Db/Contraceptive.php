@@ -26,40 +26,35 @@ declare(strict_types=1);
 namespace OCA\Period\Db;
 
 use JsonSerializable;
-use DateTime;
 
 use OCP\AppFramework\Db\Entity;
 
 /**
  * @method getId(): int
- * @method getDate(): ?DateTime
- * @method setDate(?DateTime $date): void
- * @method getNote(): string
- * @method setNote(string $note): void
- * @method getSymptomId(): string
- * @method setSymptomId(string $symptomId): void
- * @method getContraceptiveId(): string
- * @method setContraceptiveId(string $contraceptiveId): void
+ * @method getName(): string
+ * @method setName(string $name): void
+ * @method getDescription(): string
+ * @method setDescription(string $description): void
+ * @method getSideEffects(): string
+ * @method setSideEffects(string $description): void
  * @method getUserId(): string
  * @method setUserId(string $userId): void
  */
-
-class Calendar extends Entity implements JsonSerializable {
+class Contraceptive extends Entity implements JsonSerializable {
     public int $id;
-    protected ?DateTime $date = null;
-    protected string $note = '';
-    protected string $symptomId = '';
-    protected string $contraceptiveId = '';
+    protected string $name = '';
+    protected string $description = '';
+    protected string $sideEffects = '';
     protected string $userId = '';
 
     public function jsonSerialize(): array {
         return [
             'id' => $this->id,
-            'date' => $this->date,
-            'note' => $this->note,
-            'symptomId' => $this->symptomId,
-            'contraceptiveId' => $this->contraceptiveId,
+            'name' => $this->name,
+            'description' => $this->description,
+            'sideEffects' => $this->sideEffects,
             'userId' => $this->userId,
         ];
     }
 }
+

@@ -41,6 +41,13 @@ return [
         ['name' => 'calendar#update', 'url' => '/calendars/{calendarId}', 'verb' => 'PUT'],
         ['name' => 'calendar#delete', 'url' => '/calendars/{calendarId}', 'verb' => 'DELETE'],
 
+    // category
+        ['name' => 'contraceptive#index', 'url' => '/contraceptives', 'verb' => 'GET'],
+        ['name' => 'contraceptive#create', 'url' => '/contraceptives', 'verb' => 'POST'],
+        ['name' => 'contraceptive#show', 'url' => '/contraceptives/{contraceptiveId}', 'verb' => 'GET'],
+        ['name' => 'contraceptive#update', 'url' => '/contraceptives/{contraceptiveId}', 'verb' => 'PUT'],
+        ['name' => 'contraceptive#delete', 'url' => '/contraceptives/{contraceptiveId}', 'verb' => 'DELETE'],
+
     // symptom
         ['name' => 'symptom#index', 'url' => '/symptoms', 'verb' => 'GET'],
         ['name' => 'symptom#create', 'url' => '/symptoms', 'verb' => 'POST'],
