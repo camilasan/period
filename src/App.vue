@@ -23,53 +23,57 @@
   <NcContent app-name="period">
       <NcAppNavigation>
         <NcAppNavigationNew v-if="!loading"
-          :text="t('period profile', 'Add profile')"
+          :text="t('period data', 'Add data for today')"
           :disabled="false"
-          button-id="add-profile-button"
+          button-id="add-data-button"
           button-class="icon-add"
-          @click="newProfile" />
+          @click="newCalendar" />
         <ul>
-          <NcAppNavigationItem v-for="profile in profiles"
-            :key="profile.id"
-            :name="profile.name ? profile.name : t('period profile', 'Add profile')"
-            :class="{active: currentProfileId === profile.id}"
-            @click="openProfile(profile)">
+          <NcAppNavigationItem v-for="calendar in calendars"
+            :key="calendar.id"
+            :name="calendar.date ? calendar.date : t('period data', 'Add data for today')"
+            :class="{active: currentCalendarId === calendar.id}"
+            @click="openCalendar(calendar)">
             <template #icon>
               <Pencil :size="20" />
             </template>
             <template #actions>
-              <NcActionButton @click="deleteProfile(profile)">
+              <NcActionButton @click="deleteCalendar(calendar)">
                 <template #icon>
                   <Delete :size="20" />
                 </template>
-                {{ t('period profile', 'Delete profile') }}
+                {{ t('period data', 'Delete data') }}
               </NcActionButton>
             </template>
           </NcAppNavigationItem>
         </ul>
       </NcAppNavigation>
       <NcAppContent>
-        <div v-if="currentProfile" class="profile-content">
-          <h2>{{t('period profile', 'Profile')}}: {{ currentProfile.name }}</h2>
+        <div v-if="currentCalendar" class="calendar-content">
+          <h2>{{t('period data', 'Data for today')}}: {{ currentCalendar.date }}</h2>
           <div class="form">
-            <label>Name</label>
-            <input ref="name"
-                   v-model="currentProfile.name"
+            <label>How do you feel today?</label>
+            <input ref="feeling"
+                   v-model="currentCalendar.feeling"
                    :disabled="updating"/>
-            <label>Age</label>
-            <input ref="age"
-              v-model="currentProfile.age"
+            <label>Note</label>
+            <input ref="note"
+              v-model="currentCalendar.note"
               type="number"
               :disabled="updating">
+            <label>Symptoms</label>
+            <input ref="symptomId"
+                   v-model="currentCalendar.symptomId"
+                   :disabled="updating"/>
             <label>Contraceptive</label>
-            <input ref="contraceptive"
-                   v-model="currentProfile.contraceptive"
+            <input ref="contraceptiveId"
+                   v-model="currentCalendar.contraceptiveId"
                    :disabled="updating"/>
             <input type="button"
               class="primary"
-              :value="t('period profile', 'Save')"
+              :value="t('period data', 'Save')"
               :disabled="updating || !savePossible"
-              @click="saveProfile">
+              @click="saveCalendar">
           </div>
         </div>
         <NcEmptyContent v-if="isEmpty" key="empty">
@@ -77,7 +81,7 @@
             <Plus :size="20" />
           </template>
           <template #title>
-            {{ t('period profile', 'Create a profile to get started') }}
+            {{ t('period data', 'Add data for today to get started') }}
           </template>
         </NcEmptyContent>
       </NcAppContent>
@@ -117,154 +121,157 @@ export default {
 	},
 	data() {
 		return {
-			profiles: [],
-			currentProfileId: null,
+			calendars: [],
+			currentCalendarId: null,
 			updating: false,
 			loading: true,
 		}
 	},
 	computed: {
 		/**
-		 * Return the currently selected profile object
+		 * Return the currently selected calendar object
 		 * @returns {Object|null}
 		 */
-		currentProfile() {
-			if (this.currentProfileId === null) {
+		currentCalendar() {
+			if (this.currentCalendarId === null) {
 				return null
 			}
-			return this.profiles.find((profile) => profile.id === this.currentProfileId)
+			return this.calendars.find((calendar) => calendar.id === this.currentCalendarId)
 		},
 
 		/**
-		 * Returns true if a profile is selected and its title is not empty
+		 * Returns true if a calendar is selected and its title is not empty
 		 * @returns {Boolean}
 		 */
 		savePossible() {
-			return this.currentProfile
-          && this.currentProfile.name !== ''
-          && this.currentProfile.age !== ''
-          && this.currentProfile.contraceptive !== ''
+			return this.currentCalendarId
+          && this.currentCalendar.feeling !== ''
+          && this.currentCalendar.note !== ''
+          && this.currentCalendar.symptomId !== ''
+          && this.currentCalendar.contraceptiveId !== ''
 		},
 	},
 	/**
-	 * Fetch list of profiles when the component is loaded
+	 * Fetch list of calendars when the component is loaded
 	 */
 	async mounted() {
 		try {
-			const response = await axios.get(generateUrl('/apps/period/profiles'))
-			this.profiles = response.data
+			const response = await axios.get(generateUrl('/apps/period/calendars'))
+			this.calendars = response.data
 		} catch (e) {
 			console.error(e)
-			showError(t('period', 'Could not fetch profiles'))
+			showError(t('period', 'Could not fetch data'))
 		}
 		this.loading = false
 	},
 
 	methods: {
 		/**
-		 * Create a new profile and focus the profile content field automatically
-		 * @param {Object} profile Profile object
+		 * Create a new calendar and focus the calendar content field automatically
+		 * @param {Object} calendar Calendar object
 		 */
-		openProfile(profile) {
+		openCalendar(calendar) {
 			if (this.updating) {
 				return
 			}
-			this.currentProfileId = profile.id
+			this.currentCalendarId = calendar.id
 			this.$nextTick(() => {
-				this.$refs.name.focus()
+				this.$refs.feeling.focus()
 			})
 		},
 		/**
 		 * Action triggered when clicking the save button
-		 * create a new profile or save
+		 * create a new calendar or save
 		 */
-		saveProfile() {
-			if (this.currentProfileId === -1) {
-				this.createProfile(this.currentProfile)
+		saveCalendar() {
+			if (this.currentCalendarId === -1) {
+				this.createCalendar(this.currentCalendar)
 			} else {
-				this.updateProfile(this.currentProfile)
+				this.updateCalendar(this.currentCalendar)
 			}
 		},
 		/**
-		 * Create a new profile and focus the profile contraceptive field automatically
+		 * Create a new calendar and focus the feeling field automatically
 		 * The note is not yet saved, therefore an id of -1 is used until it
 		 * has been persisted in the backend
 		 */
-		newProfile() {
-			if (this.currentProfileId !== -1) {
-				this.currentProfileId = -1
-				this.profiles.push({
+		newCalendar() {
+			if (this.currentCalendarId !== -1) {
+				this.currentCalendarId = -1
+				this.calendars.push({
 					id: -1,
-          name: '',
-					age: '',
-					contraceptive: '',
+          feeling: '',
+          date: '',
+					note: '',
+          symptomId: '',
+					contraceptiveId: '',
 				})
 				this.$nextTick(() => {
-					this.$refs.name.focus()
+					this.$refs.feeling.focus()
 				})
 			}
 		},
 		/**
-		 * Abort creating a new profile
+		 * Abort creating a new calendar
 		 */
-		cancelNewProfile() {
-			this.profiles.splice(this.profiles.findIndex((profile) => profile.id === -1), 1)
-			this.currentProfileId = null
+		cancelNewCalendar() {
+			this.calendars.splice(this.calendars.findIndex((calendar) => calendar.id === -1), 1)
+			this.currentCalendarId = null
 		},
 		/**
-		 * Create a new profile by sending the information to the server
-		 * @param {Object} profile Profile object
+		 * Create a new calendar by sending the information to the server
+		 * @param {Object} calendar Calendar object
 		 */
-		async createProfile(profile) {
+		async createCalendar(calendar) {
 			this.updating = true
 			try {
-				const response = await axios.post(generateUrl('/apps/period/profiles'), profile)
-				const index = this.profiles.findIndex((match) => match.id === this.currentProfileId)
-				this.$set(this.profiles, index, response.data)
-				this.currentProfileId = response.data.id
+				const response = await axios.post(generateUrl('/apps/period/calendars'), calendar)
+				const index = this.calendars.findIndex((match) => match.id === this.currentCalendarId)
+				this.$set(this.calendars, index, response.data)
+				this.currentCalendarId = response.data.id
 			} catch (e) {
 				console.error(e)
-				showError(t('period', 'Could not create the profile'))
+				showError(t('period', 'Could not create the data'))
 			}
 			this.updating = false
 		},
 		/**
-		 * Update an existing profile on the server
-		 * @param {Object} profile Profile object
+		 * Update an existing calendar on the server
+		 * @param {Object} calendar Calendar object
 		 */
-		async updateProfile(profile) {
+		async updateCalendar(calendar) {
 			this.updating = true
 			try {
-				await axios.put(generateUrl(`/apps/period/profiles/${profile.id}`), profile)
+				await axios.put(generateUrl(`/apps/period/calendars/${calendar.id}`), calendar)
 			} catch (e) {
 				console.error(e)
-				showError(t('period', 'Could not update the profile'))
+				showError(t('period data', 'Could not update the date'))
 			}
 			this.updating = false
 		},
 		/**
-		 * Delete a profile, remove it from the frontend and show a hint
-		 * @param {Object} profile Profile object
+		 * Delete a calendar, remove it from the frontend and show a hint
+		 * @param {Object} calendar Calendar object
 		 */
-		async deleteProfile(profile) {
+		async deleteCalendar(calendar) {
 			try {
-        showInfo(t('period', 'Deleting profile ' + profile.name))
-        showInfo(t('period', 'Current profile id ' + this.currentProfileId))
-				await axios.delete(generateUrl(`/apps/period/profiles/${profile.id}`))
-				this.profiles.splice(this.profiles.indexOf(profile), 1)
-				if (this.currentProfileId === profile.id) {
-					this.currentProfileId = null
+        showInfo(t('period', 'Deleting calendar ' + calendar.feeling))
+        showInfo(t('period', 'Current calendar id ' + this.currentCalendarId))
+				await axios.delete(generateUrl(`/apps/period/calendars/${calendar.id}`))
+				this.calendars.splice(this.calendars.indexOf(calendar), 1)
+				if (this.currentCalendarId === calendar.id) {
+					this.currentCalendarId = null
 				}
-				showSuccess(t('period', 'Profile deleted'))
+				showSuccess(t('period', 'Data deleted'))
 			} catch (e) {
-        console.error(profile)
+        console.error(calendar)
 				console.error(e)
-				showError(t('period', 'Could not delete the profile'))
+				showError(t('period', 'Could not delete the data'))
 			}
 		},
 
     isEmpty() {
-      return this.profiles.length === 0
+      return this.calendars.length === 0
     },
 	},
 }
@@ -279,20 +286,20 @@ export default {
 		flex-grow: 1;
 	}
 
-  .profile-content {
+  .calendar-content {
     margin: 40px 0 0 40px;
   }
 
-  .profile-content h2 {
+  .calendar-content h2 {
     margin-top: 30px;
   }
 
-  .profile-content div {
+  .calendar-content div {
     width: 100%;
     margin-top: 30px;
   }
 
-  .profile-content div.form {
+  .calendar-content div.form {
     width: 90%;
     margin: 0 auto;
   }
