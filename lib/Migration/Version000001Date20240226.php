@@ -64,7 +64,7 @@ class Version000001Date20240226 extends SimpleMigrationStep
             ]);
 
             $table->setPrimaryKey(['id']);
-            $table->addIndex(['user_id'], 'period_category_user_id_index');
+            $table->addIndex(['user_id'], 'period_categ_user_id_index');
         }
 
         if (!$schema->hasTable('period_symptom')) {
@@ -91,8 +91,8 @@ class Version000001Date20240226 extends SimpleMigrationStep
             ]);
 
             $table->setPrimaryKey(['id']);
-            $table->addIndex(['category_id'], 'period_symptom_category_id_index');
-            $table->addIndex(['user_id'], 'period_symptom_user_id_index');
+            $table->addIndex(['category_id'], 'period_symp_categ_id_index');
+            $table->addIndex(['user_id'], 'period_symp_user_id_index');
         }
 
         if (!$schema->hasTable('period_contraceptive')) {
@@ -119,7 +119,7 @@ class Version000001Date20240226 extends SimpleMigrationStep
             ]);
 
             $table->setPrimaryKey(['id']);
-            $table->addIndex(['user_id'], 'period_category_user_id_index');
+            $table->addIndex(['user_id'], 'period_contrac_user_id_index');
         }
 
         if (!$schema->hasTable('period_calendar')) {
@@ -154,9 +154,10 @@ class Version000001Date20240226 extends SimpleMigrationStep
             ]);
 
             $table->setPrimaryKey(['id']);
-            $table->addIndex(['profile_id'], 'period_calendar_profile_id_index');
-            $table->addIndex(['symptom_id'], 'period_calendar_symptom_id_index');
-            $table->addIndex(['user_id'], 'period_calendar_user_id_index');
+
+            $table->addIndex(['symptom_id'], 'period_cal_symp_id_index');
+            $table->addIndex(['contraceptive_id'], 'period_cal_contra_id_index');
+            $table->addIndex(['user_id'], 'period_cal_user_id_index');
         }
         return $schema;
     }
