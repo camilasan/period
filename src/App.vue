@@ -55,19 +55,22 @@
             <label>How do you feel today?</label>
             <input ref="feeling"
                    v-model="currentCalendar.feeling"
+                   type="text"
                    :disabled="updating"/>
             <label>Note</label>
             <input ref="note"
               v-model="currentCalendar.note"
-              type="number"
+              type="text"
               :disabled="updating">
             <label>Symptoms</label>
             <input ref="symptomId"
                    v-model="currentCalendar.symptomId"
+                   type="text"
                    :disabled="updating"/>
             <label>Contraceptive</label>
             <input ref="contraceptiveId"
                    v-model="currentCalendar.contraceptiveId"
+                   type="text"
                    :disabled="updating"/>
             <input type="button"
               class="primary"
@@ -75,7 +78,7 @@
               :disabled="updating || !savePossible"
               @click="saveCalendar">
           </div>
-        </div>
+        </div\=]-[po
         <NcEmptyContent v-if="isEmpty" key="empty">
           <template #icon>
             <Plus :size="20" />
